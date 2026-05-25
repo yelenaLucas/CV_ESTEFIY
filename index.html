@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stefanie Carrión – Portafolio Profesional</title>
+  <style>
+    /* ── Reset & Variables ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:   #2c3e6b;
+      --accent:    #e8a838;
+      --light:     #f4f6fb;
+      --white:     #ffffff;
+      --text:      #2d2d2d;
+      --muted:     #6b7280;
+      --radius:    12px;
+      --shadow:    0 4px 24px rgba(44,62,107,.10);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      color: var(--text);
+      background: var(--light);
+      line-height: 1.65;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(44,62,107,.96);
+      backdrop-filter: blur(8px);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: .8rem 5%;
+    }
+    .nav-logo { color: var(--white); font-weight: 700; font-size: 1.1rem; letter-spacing: .5px; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,.85); text-decoration: none;
+      font-size: .9rem; transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--primary) 0%, #1a2a55 100%);
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 6rem 1.5rem 3rem;
+    }
+    .hero-inner { max-width: 700px; }
+    .avatar {
+      width: 120px; height: 120px; border-radius: 50%;
+      background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 3rem; color: var(--white); font-weight: 700;
+      box-shadow: 0 0 0 6px rgba(232,168,56,.3);
+    }
+    .hero-inner h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      color: var(--white); font-weight: 800; letter-spacing: -1px;
+    }
+    .hero-inner h1 span { color: var(--accent); }
+    .hero-subtitle {
+      color: rgba(255,255,255,.75); font-size: 1.1rem;
+      letter-spacing: 3px; text-transform: uppercase; margin: .5rem 0 1.5rem;
+    }
+    .hero-bio {
+      color: rgba(255,255,255,.85); max-width: 580px; margin: 0 auto 2rem;
+      font-size: 1rem;
+    }
+    .btn-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      padding: .75rem 1.8rem; border-radius: 50px; font-weight: 600;
+      font-size: .95rem; text-decoration: none; transition: all .25s;
+      display: inline-flex; align-items: center; gap: .5rem;
+    }
+    .btn-primary { background: var(--accent); color: var(--white); }
+    .btn-primary:hover { background: #d4922a; transform: translateY(-2px); }
+    .btn-outline { border: 2px solid rgba(255,255,255,.5); color: var(--white); }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 1.5rem; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    .section-title {
+      font-size: 1.9rem; font-weight: 800; color: var(--primary);
+      margin-bottom: 2.5rem; text-align: center; position: relative;
+    }
+    .section-title::after {
+      content: ''; display: block; width: 50px; height: 4px;
+      background: var(--accent); border-radius: 2px;
+      margin: .5rem auto 0;
+    }
+
+    /* ── EXPERIENCE ── */
+    #experiencia { background: var(--white); }
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+      width: 3px; background: linear-gradient(to bottom, var(--accent), var(--primary));
+      border-radius: 2px;
+    }
+    .tl-item {
+      position: relative; margin-bottom: 2.5rem;
+      background: var(--light); border-radius: var(--radius);
+      padding: 1.5rem 1.5rem 1.5rem 2rem;
+      box-shadow: var(--shadow); transition: transform .25s;
+    }
+    .tl-item:hover { transform: translateX(4px); }
+    .tl-dot {
+      position: absolute; left: -2.55rem; top: 1.6rem;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--accent); border: 3px solid var(--white);
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+    .tl-company { font-weight: 800; color: var(--primary); font-size: 1.05rem; }
+    .tl-role { font-weight: 600; color: var(--accent); font-size: .95rem; }
+    .tl-period {
+      font-size: .82rem; color: var(--muted); margin: .2rem 0 .8rem;
+      display: flex; align-items: center; gap: .3rem;
+    }
+    .tl-list { padding-left: 1.2rem; }
+    .tl-list li { margin-bottom: .4rem; color: var(--muted); font-size: .95rem; }
+
+    /* ── SKILLS ── */
+    #habilidades { background: var(--light); }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+    }
+    .skill-card {
+      background: var(--white); border-radius: var(--radius);
+      padding: 1.2rem 1rem; text-align: center; box-shadow: var(--shadow);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .skill-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(44,62,107,.15); }
+    .skill-icon { font-size: 2rem; margin-bottom: .5rem; }
+    .skill-name { font-weight: 600; color: var(--primary); font-size: .9rem; }
+
+    /* ── IDIOMAS ── */
+    .lang-badges { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: .5rem; }
+    .lang-badge {
+      background: var(--primary); color: var(--white);
+      border-radius: 50px; padding: .5rem 1.4rem;
+      font-weight: 600; font-size: .95rem;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .lang-level {
+      background: var(--accent); border-radius: 50px;
+      padding: .15rem .6rem; font-size: .75rem;
+    }
+
+    /* ── EDUCACIÓN ── */
+    #educacion { background: var(--white); }
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.2rem;
+    }
+    .edu-card {
+      background: var(--light); border-radius: var(--radius);
+      padding: 1.4rem; box-shadow: var(--shadow);
+      border-left: 4px solid var(--accent);
+      transition: transform .25s;
+    }
+    .edu-card:hover { transform: translateY(-3px); }
+    .edu-inst { font-weight: 800; color: var(--primary); }
+    .edu-degree { color: var(--muted); font-size: .9rem; margin: .2rem 0; }
+    .edu-year {
+      font-size: .82rem; color: var(--accent); font-weight: 600;
+      display: flex; align-items: center; gap: .3rem;
+    }
+
+    /* ── CURSOS ── */
+    #cursos { background: var(--light); }
+    .courses-list { display: flex; flex-direction: column; gap: .8rem; }
+    .course-item {
+      background: var(--white); border-radius: var(--radius);
+      padding: 1rem 1.4rem; box-shadow: var(--shadow);
+      display: flex; align-items: center; gap: 1rem;
+      transition: transform .25s;
+    }
+    .course-item:hover { transform: translateX(4px); }
+    .course-icon {
+      width: 42px; height: 42px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), #4a6fa5);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+    .course-name { font-weight: 600; color: var(--primary); }
+    .course-detail { font-size: .85rem; color: var(--muted); }
+
+    /* ── REFERENCIAS ── */
+    #referencias { background: var(--white); }
+    .refs-section-label {
+      font-size: 1rem; font-weight: 700; color: var(--primary);
+      margin: 2rem 0 1rem; text-transform: uppercase;
+      letter-spacing: 1px; border-bottom: 2px solid var(--light);
+      padding-bottom: .5rem;
+    }
+    .refs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+    .ref-card {
+      background: var(--light); border-radius: var(--radius);
+      padding: 1.2rem; box-shadow: var(--shadow);
+      transition: transform .25s;
+    }
+    .ref-card:hover { transform: translateY(-3px); }
+    .ref-name { font-weight: 700; color: var(--primary); }
+    .ref-role { font-size: .85rem; color: var(--accent); font-weight: 600; margin-bottom: .5rem; }
+    .ref-contact { font-size: .85rem; color: var(--muted); display: flex; flex-direction: column; gap: .2rem; }
+    .ref-contact a { color: var(--primary); text-decoration: none; }
+    .ref-contact a:hover { color: var(--accent); }
+
+    /* ── CONTACTO ── */
+    #contacto { background: linear-gradient(135deg, var(--primary) 0%, #1a2a55 100%); }
+    #contacto .section-title { color: var(--white); }
+    #contacto .section-title::after { background: var(--accent); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.2rem; max-width: 700px; margin: 0 auto;
+    }
+    .contact-card {
+      background: rgba(255,255,255,.08); border-radius: var(--radius);
+      padding: 1.5rem; text-align: center; border: 1px solid rgba(255,255,255,.15);
+      transition: background .25s, transform .25s;
+    }
+    .contact-card:hover { background: rgba(255,255,255,.15); transform: translateY(-3px); }
+    .contact-card-icon { font-size: 2rem; margin-bottom: .6rem; }
+    .contact-card-label { color: rgba(255,255,255,.6); font-size: .8rem; text-transform: uppercase; letter-spacing: 1px; }
+    .contact-card-value {
+      color: var(--white); font-weight: 600; font-size: .95rem;
+      margin-top: .3rem; word-break: break-all;
+    }
+    .contact-card-value a { color: var(--accent); text-decoration: none; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0f1829; color: rgba(255,255,255,.5);
+      text-align: center; padding: 1.2rem;
+      font-size: .85rem;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .timeline { padding-left: 1.2rem; }
+      .tl-dot { left: -1.75rem; }
+    }
+
+    /* ── FADE-IN ANIMATION ── */
+    .fade-in {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">Stefanie Carrión</span>
+  <ul class="nav-links">
+    <li><a href="#hero">Inicio</a></li>
+    <li><a href="#experiencia">Experiencia</a></li>
+    <li><a href="#habilidades">Habilidades</a></li>
+    <li><a href="#educacion">Educación</a></li>
+    <li><a href="#cursos">Cursos</a></li>
+    <li><a href="#referencias">Referencias</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="avatar">SC</div>
+    <h1>Stefanie <span>Carrión</span> Tumbaco</h1>
+    <p class="hero-subtitle">Asistente Contable &amp; Estudiante de Derecho</p>
+    <p class="hero-bio">
+      Profesional proactiva y orientada a resultados, con habilidades en comunicación,
+      negociación y atención al cliente. Especializada en gestión de cobranzas, contabilidad
+      y facturación electrónica, con trato cordial y enfoque en el cumplimiento de objetivos.
+    </p>
+    <div class="btn-group">
+      <a href="#contacto" class="btn btn-primary">📬 Contáctame</a>
+      <a href="#experiencia" class="btn btn-outline">Ver experiencia</a>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCIA -->
+<section id="experiencia">
+  <div class="container">
+    <h2 class="section-title fade-in">Experiencia Profesional</h2>
+    <div class="timeline">
+
+      <div class="tl-item fade-in">
+        <span class="tl-dot"></span>
+        <div class="tl-company">COOP. Guayaquil Transporte Limitada</div>
+        <div class="tl-role">Asistente Contable</div>
+        <div class="tl-period">📅 2023 – 2025</div>
+        <ul class="tl-list">
+          <li>Gestión de cartera de clientes y proveedores.</li>
+          <li>Recepción y revisión de registros contables: facturas, retenciones, notas de crédito y órdenes de compra.</li>
+          <li>Manejo de cobranzas con seguimiento eficiente y trato empático.</li>
+          <li>Ingreso de asientos contables, depósitos y cuentas por pagar.</li>
+          <li>Declaración de impuestos al SRI.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item fade-in">
+        <span class="tl-dot"></span>
+        <div class="tl-company">Tecno Trans</div>
+        <div class="tl-role">Asistente Administrativa y Contable</div>
+        <div class="tl-period">📅 2022 – 2023</div>
+        <ul class="tl-list">
+          <li>Servicio al cliente y recepción de ingreso de materia prima.</li>
+          <li>Facturación electrónica mediante la plataforma Security Data.</li>
+          <li>Seguimiento y asesoramiento en órdenes de cobranzas a clientes.</li>
+          <li>Manejo de ERP y sistemas web de la empresa.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HABILIDADES -->
+<section id="habilidades">
+  <div class="container">
+    <h2 class="section-title fade-in">Herramientas &amp; Habilidades</h2>
+    <div class="skills-grid fade-in">
+      <div class="skill-card"><div class="skill-icon">📊</div><div class="skill-name">Microsoft Office</div></div>
+      <div class="skill-card"><div class="skill-icon">📈</div><div class="skill-name">Excel Avanzado</div></div>
+      <div class="skill-card"><div class="skill-icon">🧾</div><div class="skill-name">Facturación Electrónica</div></div>
+      <div class="skill-card"><div class="skill-icon">🌐</div><div class="skill-name">Servicios de Google</div></div>
+      <div class="skill-card"><div class="skill-icon">📋</div><div class="skill-name">Security Facturas</div></div>
+      <div class="skill-card"><div class="skill-icon">🏛️</div><div class="skill-name">SRI Webapp</div></div>
+      <div class="skill-card"><div class="skill-icon">🖼️</div><div class="skill-name">Edición Fotográfica</div></div>
+      <div class="skill-card"><div class="skill-icon">🎬</div><div class="skill-name">Edición de Video</div></div>
+      <div class="skill-card"><div class="skill-icon">🗂️</div><div class="skill-name">ERP / Sistemas Web</div></div>
+      <div class="skill-card"><div class="skill-icon">🤝</div><div class="skill-name">Atención al Cliente</div></div>
+      <div class="skill-card"><div class="skill-icon">💼</div><div class="skill-name">Gestión de Cobranzas</div></div>
+      <div class="skill-card"><div class="skill-icon">🗣️</div><div class="skill-name">Negociación</div></div>
+    </div>
+
+    <h2 class="section-title fade-in" style="margin-top:3.5rem;">Idiomas</h2>
+    <div class="lang-badges fade-in">
+      <div class="lang-badge">🇬🇧 Inglés <span class="lang-level">B2</span></div>
+      <div class="lang-badge">🇧🇷 Portugués <span class="lang-level">Básico</span></div>
+      <div class="lang-badge">🇪🇸 Español <span class="lang-level">Nativo</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCACIÓN -->
+<section id="educacion">
+  <div class="container">
+    <h2 class="section-title fade-in">Formación Académica</h2>
+    <div class="edu-grid">
+
+      <div class="edu-card fade-in">
+        <div class="edu-inst">Universidad Técnica Particular de Loja</div>
+        <div class="edu-degree">Derecho — Tercer Semestre (En curso)</div>
+        <div class="edu-year">🎓 2025 – Presente</div>
+      </div>
+
+      <div class="edu-card fade-in">
+        <div class="edu-inst">Unidad Educativa Salesiana Cristóbal Colón</div>
+        <div class="edu-degree">Bachillerato</div>
+        <div class="edu-year">📅 2019 – 2022</div>
+      </div>
+
+      <div class="edu-card fade-in">
+        <div class="edu-inst">U.E. Particular Bilingüe Ecomundo</div>
+        <div class="edu-degree">Educación Primaria y Secundaria</div>
+        <div class="edu-year">📅 2009 – 2017</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CURSOS -->
+<section id="cursos">
+  <div class="container">
+    <h2 class="section-title fade-in">Cursos &amp; Certificaciones</h2>
+    <div class="courses-list">
+
+      <div class="course-item fade-in">
+        <div class="course-icon">🏛️</div>
+        <div>
+          <div class="course-name">Inglés Avanzado – Nivel B2</div>
+          <div class="course-detail">Centro Ecuatoriano Norteamericano &nbsp;·&nbsp; 2022 – En curso</div>
+        </div>
+      </div>
+
+      <div class="course-item fade-in">
+        <div class="course-icon">💳</div>
+        <div>
+          <div class="course-name">Diplomado en Gestión de Crédito, Cartera y Cobranza</div>
+          <div class="course-detail">Formación especializada en procesos de cobranza y gestión financiera</div>
+        </div>
+      </div>
+
+      <div class="course-item fade-in">
+        <div class="course-icon">📊</div>
+        <div>
+          <div class="course-name">Excel Avanzado</div>
+          <div class="course-detail">Fórmulas avanzadas, tablas dinámicas y análisis de datos</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- REFERENCIAS -->
+<section id="referencias">
+  <div class="container">
+    <h2 class="section-title fade-in">Referencias</h2>
+
+    <div class="refs-section-label fade-in">Referencias Laborales</div>
+    <div class="refs-grid">
+      <div class="ref-card fade-in">
+        <div class="ref-name">Ing. Henry Paute Guzmán</div>
+        <div class="ref-role">Jefe — COOP. Guayaquil Transporte Limitada</div>
+        <div class="ref-contact">
+          <span>📞 0994497885</span>
+          <a href="mailto:henry.paute@hotmail.com">✉️ henry.paute@hotmail.com</a>
+        </div>
+      </div>
+      <div class="ref-card fade-in">
+        <div class="ref-name">Tec. Luis Jácome</div>
+        <div class="ref-role">Jefe — Tecno Trans</div>
+        <div class="ref-contact">
+          <span>📞 0960464433</span>
+          <a href="mailto:lmjacomec@hotmail.com">✉️ lmjacomec@hotmail.com</a>
+        </div>
+      </div>
+      <div class="ref-card fade-in">
+        <div class="ref-name">Ing. Álvaro Jácome</div>
+        <div class="ref-role">Supervisor — Tecno Trans</div>
+        <div class="ref-contact">
+          <span>📞 0996610921</span>
+          <a href="mailto:aljacome97@hotmail.com">✉️ aljacome97@hotmail.com</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="refs-section-label fade-in" style="margin-top:2rem;">Referencias Personales</div>
+    <div class="refs-grid">
+      <div class="ref-card fade-in">
+        <div class="ref-name">Tcnlga. Mayra Arcalle</div>
+        <div class="ref-contact">
+          <span>📞 0983202192</span>
+          <a href="mailto:marcalle1985@gmail.com">✉️ marcalle1985@gmail.com</a>
+        </div>
+      </div>
+      <div class="ref-card fade-in">
+        <div class="ref-name">Mgs. Yelena Lucas</div>
+        <div class="ref-contact">
+          <span>📞 0987242785</span>
+          <a href="mailto:yelenalucasaguirre@gmail.com">✉️ yelenalucasaguirre@gmail.com</a>
+        </div>
+      </div>
+      <div class="ref-card fade-in">
+        <div class="ref-name">Ing. Bercelio Lucas</div>
+        <div class="ref-contact">
+          <span>📞 0994142024</span>
+          <a href="mailto:berceliolucas@gmail.com">✉️ berceliolucas@gmail.com</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="container">
+    <h2 class="section-title fade-in">Contacto</h2>
+    <div class="contact-grid fade-in">
+      <div class="contact-card">
+        <div class="contact-card-icon">📞</div>
+        <div class="contact-card-label">Teléfono</div>
+        <div class="contact-card-value"><a href="tel:+593963821303">0963821303</a></div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">✉️</div>
+        <div class="contact-card-label">Correo</div>
+        <div class="contact-card-value"><a href="mailto:stefanienathaly26@gmail.com">stefanienathaly26@gmail.com</a></div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">📍</div>
+        <div class="contact-card-label">Ubicación</div>
+        <div class="contact-card-value">Guayaquil, Sauces 4<br>Av. Rodrigo Icaza Cornejo, Bloque 90</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  &copy; 2025 Stefanie Carrión Tumbaco &nbsp;·&nbsp; Todos los derechos reservados
+</footer>
+
+<script>
+  // Intersection Observer para fade-in al hacer scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
